@@ -1,6 +1,6 @@
 // lib/shared/screens/kundali/screen_dual_chart_kundli.dart
-// Screen 1: Your Kundli Dual-Card Overlay ("Your chart, not your sun sign")
-// Direct 1:1 Implementation matching Reference Screenshot (media_1792522755434_5d63f45e.jpg)
+// Screen: Your Kundli Dual-Card Overlay ("Your chart, not your sun sign")
+// Direct 1:1 Implementation matching Reference Screenshots (media_1792533988974_c93c1383.jpg & media_1792533988978_d7276c52.jpg)
 
 import 'package:flutter/material.dart';
 import '../../widgets/batch4_celestial_painters.dart';
@@ -14,27 +14,10 @@ class ScreenDualChartKundli extends StatelessWidget {
       backgroundColor: const Color(0xFF131217),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Back Arrow
-              GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1E1D26),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white.withOpacity(0.08)),
-                  ),
-                  child: const Icon(Icons.arrow_back, size: 20, color: Colors.white70),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
               // Subtitle in terracotta uppercase
               const Text(
                 "YOUR KUNDLI",
@@ -72,7 +55,7 @@ class ScreenDualChartKundli extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // Dual-Layered Kundli Card (D1 + D9 Overlap with 4 Dignity Badges)
+              // Dual-Layered 3D Movable Kundli Card (D1 + D9 Overlap with 3D Gestures)
               const DualLayeredKundliWidget(),
 
               const SizedBox(height: 30),

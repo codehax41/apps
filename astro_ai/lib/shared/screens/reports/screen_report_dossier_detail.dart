@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../engine/vedic/vedic_report_models.dart';
 import '../../engine/vedic/vedic_calculation_service.dart';
 import '../../widgets/reports_celestial_painters.dart';
+import '../../widgets/tajik_solar_return_3d_wheel.dart';
 import '../screen_voice_session.dart';
 
 class ScreenReportDossierDetail extends StatefulWidget {
@@ -143,11 +144,7 @@ class _ScreenReportDossierDetailState extends State<ScreenReportDossierDetail> w
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               child: Row(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  const SizedBox(width: 6),
+
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -417,6 +414,11 @@ class _ScreenReportDossierDetailState extends State<ScreenReportDossierDetail> w
   }
 
   Widget _buildDynamicVisualCanvas(Color goldColor) {
+    if (widget.reportOrSystemId == VedicSystemId.varshphal || _dossier.reportTitle.toLowerCase().contains("varshphal")) {
+      return TajikSolarReturn3DWheelWidget(
+        title: _dossier.reportTitle.toUpperCase(),
+      );
+    }
     return Container(
       width: double.infinity,
       height: 160,

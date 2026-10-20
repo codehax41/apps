@@ -1,6 +1,6 @@
 // lib/shared/screens/transits/screen_todays_transits.dart
-// Screen 5: Today's Transits - Interactive 3D Sky Dial & Planetary Retrograde Telemetry
-// Direct 1:1 Implementation matching Reference Screenshot (media_1792522755444_5ae25bcd.jpg)
+// Screen: Today's Transits - Interactive 3D Sky Dial & Planetary Retrograde Telemetry
+// Direct 1:1 Implementation matching Reference Screenshot (media_1792533988975_9ed79922.jpg)
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +15,7 @@ class ScreenTodaysTransits extends StatefulWidget {
 }
 
 class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
-  bool _isTodaySelected = true;
+  bool _isTodaySelected = false;
   String _activePlanetName = "Jupiter";
 
   void _onPlanetSelected(PlanetaryTransitItem p) {
@@ -49,27 +49,10 @@ class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
       backgroundColor: const Color(0xFF131217),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Back Arrow
-              GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1E1D26),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white.withOpacity(0.08)),
-                  ),
-                  child: const Icon(Icons.arrow_back, size: 20, color: Colors.white70),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
               // Subtitle in terracotta uppercase
               const Text(
                 "TODAY'S TRANSITS",
@@ -107,37 +90,41 @@ class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
 
               const SizedBox(height: 24),
 
-              // Main Transits Card Container
+              // Main Transits Card matching screenshot
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1F1D24),
+                  color: const Color(0xFF1E1D24),
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(color: Colors.white.withOpacity(0.08)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.4),
-                      blurRadius: 20,
+                      blurRadius: 16,
                       offset: const Offset(0, 8),
                     ),
                   ],
                 ),
                 child: Column(
                   children: [
-                    // Card Top Title & Selector
+                    // Card Header with Section Title & Today/Tomorrow Toggle
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Icon(Icons.chevron_left, color: Colors.white70, size: 20),
-                            SizedBox(width: 4),
-                            Text(
+                            Icon(
+                              Icons.chevron_left,
+                              size: 18,
+                              color: Colors.white.withOpacity(0.6),
+                            ),
+                            const SizedBox(width: 4),
+                            const Text(
                               "Today's Transits",
                               style: TextStyle(
-                                fontFamily: 'Cormorant Garamond',
-                                fontSize: 18,
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -145,14 +132,15 @@ class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
                           ],
                         ),
 
-                        // Pill Selector: [ Today • ] vs [ Tomorrow ]
+                        // Pill Toggle [ Today • Tomorrow ]
                         Container(
-                          padding: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF131217),
-                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF141318),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -160,39 +148,40 @@ class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
                                   setState(() => _isTodaySelected = true);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                   decoration: BoxDecoration(
                                     color: _isTodaySelected ? const Color(0xFFE07A5F) : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Text(
-                                    "Today •",
+                                    "Today",
                                     style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 11.5,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
                                       color: _isTodaySelected ? Colors.white : Colors.white60,
                                     ),
                                   ),
                                 ),
                               ),
+                              const SizedBox(width: 4),
                               GestureDetector(
                                 onTap: () {
                                   HapticFeedback.selectionClick();
                                   setState(() => _isTodaySelected = false);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                   decoration: BoxDecoration(
                                     color: !_isTodaySelected ? const Color(0xFFE07A5F) : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Text(
                                     "Tomorrow",
                                     style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 11.5,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
                                       color: !_isTodaySelected ? Colors.white : Colors.white60,
                                     ),
                                   ),
@@ -204,72 +193,59 @@ class _ScreenTodaysTransitsState extends State<ScreenTodaysTransits> {
                       ],
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 18),
 
-                    // Interactive 3D Celestial Orbit Wheel
+                    // Interactive 3D Movable Planetary Transit Dial Widget
                     PlanetaryTransitDialWidget(
-                      size: 290,
+                      size: 260,
                       onPlanetSelected: _onPlanetSelected,
                     ),
 
                     const SizedBox(height: 24),
 
-                    // Bottom Action Row: [ 💬 Ask Om.AI about this ] + [ 🔗 Share ]
+                    // Bottom Action Row matching screenshot:
+                    // [ Ask Om.AI about this ] & [ Share Icon ]
                     Row(
                       children: [
-                        // Primary CTA
                         Expanded(
-                          child: GestureDetector(
-                            onTap: _askOmAi,
-                            child: Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xFFE07A5F), Color(0xFFC75D43)],
-                                ),
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFE07A5F),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFFE07A5F).withOpacity(0.35),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
                               ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.chat_bubble_outline, size: 16, color: Colors.white),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    "Ask Om.AI about this",
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
+                              elevation: 0,
+                            ),
+                            onPressed: _askOmAi,
+                            icon: const Icon(Icons.chat_bubble_outline, size: 18),
+                            label: const Text(
+                              "Ask Om.AI about this",
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
-
                         const SizedBox(width: 12),
-
-                        // Share Button
                         GestureDetector(
                           onTap: _shareTransitSnapshot,
                           child: Container(
                             width: 48,
                             height: 48,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF282631),
+                              color: const Color(0xFF26252C),
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white.withOpacity(0.12)),
+                              border: Border.all(color: Colors.white.withOpacity(0.08)),
                             ),
-                            child: const Icon(Icons.share_outlined, size: 18, color: Colors.white70),
+                            child: const Icon(
+                              Icons.share_outlined,
+                              size: 20,
+                              color: Colors.white70,
+                            ),
                           ),
                         ),
                       ],

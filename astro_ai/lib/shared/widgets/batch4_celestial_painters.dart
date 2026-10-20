@@ -645,9 +645,15 @@ class PlanetaryTransitDialWidget extends StatefulWidget {
 }
 
 class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _orbitController;
+  late AnimationController _idleSpinController;
   late PlanetaryTransitItem _focusedPlanet;
+
+  // 3D Movable Jupiter & Orbit Parameters
+  double _jupiterSpin = 0.0;
+  double _jupiterTiltX = 0.0;
+  double _orbitPitch = 0.15;
 
   final List<PlanetaryTransitItem> _orbitPlanets = const [
     PlanetaryTransitItem(
@@ -729,7 +735,6 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
   @override
   void initState() {
     super.initState();
-    // Default focused center planet is Jupiter as in reference screenshot
     _focusedPlanet = const PlanetaryTransitItem(
       id: "jupiter",
       name: "Jupiter",
@@ -744,11 +749,22 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
       vsync: this,
       duration: const Duration(seconds: 40),
     )..repeat();
+
+    _idleSpinController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 30),
+    )..addListener(() {
+        setState(() {
+          _jupiterSpin += 0.004;
+        });
+      })
+      ..repeat();
   }
 
   @override
   void dispose() {
     _orbitController.dispose();
+    _idleSpinController.dispose();
     super.dispose();
   }
 
@@ -771,17 +787,22 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // 1. Orbital Ring Canvas
-              CustomPaint(
-                size: Size(widget.size, widget.size),
-                painter: OrbitalRingsPainter(),
+              // 1. Interactive 3D Orbital Rings with Perspective Pitch
+              Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.0015)
+                  ..rotateX(_orbitPitch)
+                  ..rotateY(0.0),
+                child: CustomPaint(
+                  size: Size(widget.size, widget.size),
+                  painter: OrbitalRingsPainter(),
+                ),
               ),
 
               // 2. Surrounding Vedic Grahas
               ..._orbitPlanets.map((planet) {
-                // Calculate position on the circular orbit
                 final r = (widget.size / 2) * planet.orbitRadiusFraction;
-                // Add subtle slow rotation
                 final x = (widget.size / 2) + r * math.cos(planet.orbitAngle - math.pi / 2);
                 final y = (widget.size / 2) + r * math.sin(planet.orbitAngle - math.pi / 2);
 
@@ -801,7 +822,6 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
                         clipBehavior: Clip.none,
                         alignment: Alignment.center,
                         children: [
-                          // Planet Sphere
                           Container(
                             width: planet.id == 'mercury' || planet.id == 'venus' ? 28 : 22,
                             height: planet.id == 'mercury' || planet.id == 'venus' ? 28 : 22,
@@ -830,7 +850,6 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
                             ),
                           ),
 
-                          // Saturn Rings
                           if (isSaturn)
                             Transform.rotate(
                               angle: -0.45,
@@ -847,7 +866,6 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
                               ),
                             ),
 
-                          // Retrograde Badge (Orange R in top right)
                           if (planet.isRetrograde)
                             Positioned(
                               top: -2,
@@ -877,28 +895,42 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
                 );
               }),
 
-              // 3. Central Focused Planet (Enlarged 3D Textured Sphere)
+              // 3. Central Focused Planet (Interactive 3D Movable Jupiter Sphere)
               Positioned(
                 bottom: 12,
                 child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.selectionClick();
+                  onPanUpdate: (details) {
+                    setState(() {
+                      _jupiterSpin += details.delta.dx * 0.02;
+                      _jupiterTiltX = (_jupiterTiltX - details.delta.dy * 0.015).clamp(-0.45, 0.45);
+                      _orbitPitch = (_orbitPitch - details.delta.dy * 0.005).clamp(-0.35, 0.45);
+                    });
+                  },
+                  onDoubleTap: () {
+                    HapticFeedback.lightImpact();
+                    setState(() {
+                      _jupiterTiltX = 0.0;
+                      _orbitPitch = 0.15;
+                    });
                   },
                   child: Container(
-                    width: 104,
-                    height: 104,
+                    width: 108,
+                    height: 108,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: _focusedPlanet.baseColor.withOpacity(0.45),
-                          blurRadius: 28,
-                          offset: const Offset(0, 4),
+                          color: _focusedPlanet.baseColor.withOpacity(0.55),
+                          blurRadius: 32,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     ),
                     child: CustomPaint(
-                      painter: JupiterBandedSpherePainter(),
+                      painter: JupiterBandedSpherePainter(
+                        spinAngle: _jupiterSpin,
+                        tiltX: _jupiterTiltX,
+                      ),
                     ),
                   ),
                 ),
@@ -920,12 +952,32 @@ class _PlanetaryTransitDialWidgetState extends State<PlanetaryTransitDialWidget>
             letterSpacing: 0.5,
           ),
         ),
+
+        const SizedBox(height: 4),
+
+        // 3D Interaction Hint
+        Text(
+          "DRAG JUPITER TO ROTATE IN 3D",
+          style: TextStyle(
+            fontFamily: 'Space Mono',
+            fontSize: 8.5,
+            letterSpacing: 1.2,
+            color: Colors.white.withOpacity(0.35),
+          ),
+        ),
       ],
     );
   }
 }
 
+// 3D Atmospheric Shader for Movable Jupiter
+
 class OrbitalRingsPainter extends CustomPainter {
+  final double tiltX;
+  final double tiltY;
+
+  OrbitalRingsPainter({this.tiltX = 0.0, this.tiltY = 0.0});
+
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
@@ -934,20 +986,36 @@ class OrbitalRingsPainter extends CustomPainter {
     final ringPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..color = Colors.white.withOpacity(0.06);
+      ..color = Colors.white.withOpacity(0.08);
 
-    // Multiple concentric orbital rings
-    canvas.drawCircle(center, maxR * 0.55, ringPaint);
-    canvas.drawCircle(center, maxR * 0.72, ringPaint);
-    canvas.drawCircle(center, maxR * 0.88, ringPaint);
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: maxR * 1.1, height: maxR * 0.9),
+      ringPaint,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: maxR * 1.44, height: maxR * 1.18),
+      ringPaint,
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: maxR * 1.76, height: maxR * 1.44),
+      ringPaint,
+    );
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant OrbitalRingsPainter oldDelegate) =>
+      oldDelegate.tiltX != tiltX || oldDelegate.tiltY != tiltY;
 }
 
-// 3D Banded Atmospheric Shader for Jupiter
 class JupiterBandedSpherePainter extends CustomPainter {
+  final double spinAngle;
+  final double tiltX;
+
+  JupiterBandedSpherePainter({
+    this.spinAngle = 0.0,
+    this.tiltX = 0.0,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
@@ -977,35 +1045,53 @@ class JupiterBandedSpherePainter extends CustomPainter {
 
     double y = 0;
     final bandH = size.height / bandColors.length;
-    for (final col in bandColors) {
-      canvas.drawRect(
-        Rect.fromLTWH(0, y, size.width, bandH),
-        Paint()..color = col,
-      );
+    for (int i = 0; i < bandColors.length; i++) {
+      final col = bandColors[i];
+      // Curve bands slightly according to 3D tiltX
+      final curveOffset = math.sin((i / bandColors.length) * math.pi) * tiltX * 16;
+      final path = Path()
+        ..moveTo(0, y + curveOffset)
+        ..quadraticBezierTo(size.width / 2, y + curveOffset * 1.4, size.width, y + curveOffset)
+        ..lineTo(size.width, y + bandH + curveOffset)
+        ..quadraticBezierTo(size.width / 2, y + bandH + curveOffset * 1.4, 0, y + bandH + curveOffset)
+        ..close();
+
+      canvas.drawPath(path, Paint()..color = col);
       y += bandH;
     }
 
-    // Great Red Spot storm vortex (in southern temperate band)
-    final grsCenter = Offset(center.dx + radius * 0.18, center.dy + radius * 0.28);
-    final grsPaint = Paint()
-      ..shader = RadialGradient(
-        colors: [
-          const Color(0xFFB8452D),
-          const Color(0xFFD67355),
-          const Color(0xFFA13722).withOpacity(0.0),
-        ],
-      ).createShader(Rect.fromCircle(center: grsCenter, radius: 10));
-    canvas.drawOval(
-      Rect.fromCenter(center: grsCenter, width: 22, height: 11),
-      grsPaint,
-    );
+    // Great Red Spot storm vortex with 3D Spherical Rotation
+    final double grsLon = spinAngle + 0.35;
+    final double visibleFactor = math.sin(grsLon);
+
+    // Only draw Great Red Spot when rotated on the visible front hemisphere
+    if (visibleFactor > -0.15) {
+      final double grsX = center.dx + radius * 0.72 * math.cos(grsLon);
+      final double grsY = center.dy + radius * 0.28 + tiltX * 18;
+      final double grsWidth = (22.0 * visibleFactor.abs()).clamp(4.0, 22.0);
+
+      final grsCenter = Offset(grsX, grsY);
+      final grsPaint = Paint()
+        ..shader = RadialGradient(
+          colors: [
+            const Color(0xFFB8452D),
+            const Color(0xFFD67355),
+            const Color(0xFFA13722).withOpacity(0.0),
+          ],
+        ).createShader(Rect.fromCircle(center: grsCenter, radius: 10));
+
+      canvas.drawOval(
+        Rect.fromCenter(center: grsCenter, width: grsWidth, height: 11),
+        grsPaint,
+      );
+    }
 
     // 3D Spherical Ambient Shadow & Specular Gradient
     final sphereShadow = Paint()
       ..shader = RadialGradient(
-        center: const Alignment(-0.25, -0.35),
+        center: Alignment(-0.25, -0.35 + tiltX * 0.3),
         colors: [
-          Colors.white.withOpacity(0.35), // Specular sheen
+          Colors.white.withOpacity(0.38), // Specular sheen
           Colors.transparent,
           Colors.black.withOpacity(0.55),
           Colors.black.withOpacity(0.95), // Deep shadow edge
@@ -1019,9 +1105,10 @@ class JupiterBandedSpherePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant JupiterBandedSpherePainter oldDelegate) {
+    return oldDelegate.spinAngle != spinAngle || oldDelegate.tiltX != tiltX;
+  }
 }
-
 // ============================================================================
 // 5. DUAL LAYERED KUNDLI WIDGET (D1 Rasi + D9 Navamsa Overlap with 4 Dignities)
 // ============================================================================
@@ -1037,16 +1124,71 @@ class DualLayeredKundliWidget extends StatefulWidget {
   State<DualLayeredKundliWidget> createState() => _DualLayeredKundliWidgetState();
 }
 
-class _DualLayeredKundliWidgetState extends State<DualLayeredKundliWidget> {
+class _DualLayeredKundliWidgetState extends State<DualLayeredKundliWidget>
+    with TickerProviderStateMixin {
   bool _isNavamsaPrimary = false;
+
+  // 3D Movable Tilt Angles
+  double _tiltX = 0.0;
+  double _tiltY = 0.0;
+
+  late AnimationController _flipController;
+  late AnimationController _resetController;
+  late Animation<double> _resetAnimX;
+  late Animation<double> _resetAnimY;
+
+  @override
+  void initState() {
+    super.initState();
+    _flipController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 550),
+    );
+
+    _resetController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 350),
+    );
+  }
+
+  @override
+  void dispose() {
+    _flipController.dispose();
+    _resetController.dispose();
+    super.dispose();
+  }
 
   void _togglePrimaryChart(bool navamsa) {
     if (_isNavamsaPrimary != navamsa) {
       HapticFeedback.selectionClick();
+      if (_flipController.isCompleted) {
+        _flipController.reverse();
+      } else {
+        _flipController.forward();
+      }
       setState(() {
         _isNavamsaPrimary = navamsa;
       });
     }
+  }
+
+  void _resetTilt() {
+    HapticFeedback.lightImpact();
+    _resetAnimX = Tween<double>(begin: _tiltX, end: 0.0).animate(
+      CurvedAnimation(parent: _resetController, curve: Curves.easeOutCubic),
+    );
+    _resetAnimY = Tween<double>(begin: _tiltY, end: 0.0).animate(
+      CurvedAnimation(parent: _resetController, curve: Curves.easeOutCubic),
+    );
+
+    _resetController.reset();
+    _resetController.addListener(() {
+      setState(() {
+        _tiltX = _resetAnimX.value;
+        _tiltY = _resetAnimY.value;
+      });
+    });
+    _resetController.forward();
   }
 
   @override
@@ -1171,80 +1313,121 @@ class _DualLayeredKundliWidgetState extends State<DualLayeredKundliWidget> {
 
           const SizedBox(height: 14),
 
-          // 4. Overlapping Chart Cards Stack
-          SizedBox(
-            height: 290,
-            child: Stack(
-              children: [
-                // Primary Chart (Large Base)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF28282B),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.08)),
-                    ),
-                    padding: const EdgeInsets.all(12),
-                    child: CustomPaint(
-                      painter: CleanNorthIndianDiamondPainter(
-                        isD9: _isNavamsaPrimary,
+          // 4. Overlapping 3D Movable Geometric Chart Stack
+          GestureDetector(
+            onPanUpdate: (details) {
+              setState(() {
+                _tiltY = (_tiltY + details.delta.dx * 0.007).clamp(-0.45, 0.45);
+                _tiltX = (_tiltX - details.delta.dy * 0.007).clamp(-0.45, 0.45);
+              });
+            },
+            onDoubleTap: _resetTilt,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.0016)
+                ..rotateX(_tiltX)
+                ..rotateY(_tiltY),
+              child: SizedBox(
+                height: 290,
+                child: Stack(
+                  children: [
+                    // Primary Base Diamond Chart
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF28282B),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.white.withOpacity(0.08)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              blurRadius: 16,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: CustomPaint(
+                          painter: CleanNorthIndianDiamondPainter(
+                            isD9: _isNavamsaPrimary,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
 
-                // Floating Secondary Chart (Bottom-Right Overlap)
-                Positioned(
-                  right: 8,
-                  bottom: 8,
-                  child: GestureDetector(
-                    onTap: () => _togglePrimaryChart(!_isNavamsaPrimary),
-                    child: Container(
-                      width: 175,
-                      height: 175,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF202024),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: Colors.white.withOpacity(0.25), width: 1.2),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.70),
-                            blurRadius: 18,
-                            offset: const Offset(-4, -4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            _isNavamsaPrimary ? "Rasi chart (D1)" : "Navamsa chart (D9)",
-                            style: const TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontSize: 9.5,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              decoration: TextDecoration.underline,
+                    // Floating 3D Secondary Chart with Z-Depth Parallax
+                    Positioned(
+                      right: 8,
+                      bottom: 8,
+                      child: Transform.translate(
+                        offset: Offset(-_tiltY * 18, -_tiltX * 18),
+                        child: GestureDetector(
+                          onTap: () => _togglePrimaryChart(!_isNavamsaPrimary),
+                          child: Container(
+                            width: 175,
+                            height: 175,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF202024),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(color: Colors.white.withOpacity(0.25), width: 1.2),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.80),
+                                  blurRadius: 24,
+                                  offset: Offset(-6 - _tiltY * 8, -6 - _tiltX * 8),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  _isNavamsaPrimary ? "Rasi chart (D1)" : "Navamsa chart (D9)",
+                                  style: const TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontSize: 9.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Expanded(
+                                  child: CustomPaint(
+                                    painter: VerticalCelestialAxisPainter(
+                                      isD9: !_isNavamsaPrimary,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Expanded(
-                            child: CustomPaint(
-                              painter: CleanNorthIndianDiamondPainter(
-                                isD9: !_isNavamsaPrimary,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+
+          // 3D Interaction Hint
+          Center(
+            child: Text(
+              "DRAG TO TILT IN 3D • DOUBLE TAP TO RESET",
+              style: TextStyle(
+                fontFamily: 'Space Mono',
+                fontSize: 8.5,
+                letterSpacing: 1.2,
+                color: Colors.white.withOpacity(0.35),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 14),
 
           // 5. Four Dignity Badges Row: Strong (Green) | Weakened (Red) | Enemy (Purple) | Neutral (Gray)
           Row(
@@ -1458,5 +1641,84 @@ class CleanNorthIndianDiamondPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CleanNorthIndianDiamondPainter oldDelegate) =>
+      oldDelegate.isD9 != isD9;
+}
+
+
+// 3D Vertical Celestial Axis Painter matching Screenshots 2 & 4
+class VerticalCelestialAxisPainter extends CustomPainter {
+  final bool isD9;
+
+  VerticalCelestialAxisPainter({required this.isD9});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const double centerX = 175 / 2;
+    const double topY = 10;
+    final double bottomY = size.height - 10;
+
+    // Glowing Central Vertical Celestial Axis Rod
+    final rodGlow = Paint()
+      ..color = Colors.white.withOpacity(0.18)
+      ..strokeWidth = 3.5
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
+    canvas.drawLine(const Offset(centerX, topY), Offset(centerX, bottomY), rodGlow);
+
+    final rodPaint = Paint()
+      ..color = Colors.white.withOpacity(0.85)
+      ..strokeWidth = 1.2;
+    canvas.drawLine(const Offset(centerX, topY), Offset(centerX, bottomY), rodPaint);
+
+    if (isD9) {
+      // Navamsa (D9) Floating Card Axis (Screenshot 2)
+      // Nodes from top to bottom: 9, Su (purple), 8, Lg (terracotta), Mo (red), 5, Ma (cyan), 2, Me (cyan)
+      _drawAxisNode(canvas, centerX, topY + 12, "9", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 28, "Su", const Color(0xFF9D65FF));
+      _drawAxisNode(canvas, centerX, topY + 44, "8", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 58, "Lg", const Color(0xFFE07A5F));
+      _drawAxisNode(canvas, centerX, topY + 72, "Mo", const Color(0xFFFF4D4D));
+      _drawAxisNode(canvas, centerX, topY + 88, "5", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 104, "Ma", const Color(0xFF4FC3F7));
+      _drawAxisNode(canvas, centerX, topY + 118, "2", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 132, "Me", const Color(0xFF4FC3F7));
+    } else {
+      // Rasi (D1) Floating Card Axis (Screenshot 4)
+      // Nodes from top to bottom: 3, Su (purple), Me (cyan), Lg (terracotta), 12, 7, Ra (gray), Ju (cyan)
+      _drawAxisNode(canvas, centerX, topY + 12, "3", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 28, "Su", const Color(0xFF9D65FF));
+      _drawAxisNode(canvas, centerX, topY + 44, "Me", const Color(0xFF4FC3F7));
+      _drawAxisNode(canvas, centerX, topY + 60, "Lg", const Color(0xFFE07A5F));
+      _drawAxisNode(canvas, centerX, topY + 76, "12", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 92, "7", Colors.white54, isGlyph: false);
+      _drawAxisNode(canvas, centerX, topY + 108, "Ra", const Color(0xFF9E9E9E));
+      _drawAxisNode(canvas, centerX, topY + 124, "Ju", const Color(0xFF4FC3F7));
+    }
+  }
+
+  void _drawAxisNode(Canvas canvas, double x, double y, String label, Color color, {bool isGlyph = true}) {
+    // Small horizontal tick mark
+    canvas.drawLine(
+      Offset(x - 3, y),
+      Offset(x + 3, y),
+      Paint()..color = Colors.white30..strokeWidth = 0.8,
+    );
+
+    final textStyle = TextStyle(
+      fontSize: isGlyph ? 9.5 : 8.0,
+      fontWeight: isGlyph ? FontWeight.bold : FontWeight.normal,
+      color: color,
+      fontFamily: isGlyph ? 'Plus Jakarta Sans' : 'Space Mono',
+    );
+
+    final painter = TextPainter(
+      text: TextSpan(text: label, style: textStyle),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    painter.paint(canvas, Offset(x - painter.width / 2, y - painter.height / 2));
+  }
+
+  @override
+  bool shouldRepaint(covariant VerticalCelestialAxisPainter oldDelegate) =>
       oldDelegate.isD9 != isD9;
 }
