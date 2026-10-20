@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro AI — Legal & Compliance Hub</title>
+  <style>
+    :root {
+      --bg: #070712;
+      --card-bg: rgba(255, 255, 255, 0.035);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent: #F5D485;
+      --violet: #8B5CF6;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 0%, #150F2C 0%, var(--bg) 65%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      padding: 60px 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      max-width: 680px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 48px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      background: rgba(245, 212, 133, 0.12);
+      border: 1px solid rgba(245, 212, 133, 0.35);
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 36px;
+    }
+    .links-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .link-card:hover {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .link-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .link-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .arrow {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">AstroAI OS v5.0 • Legal Hub</div>
+    <h1>Astro AI Legal & Privacy</h1>
+    <p>Public legal agreements and compliance documentation for Google Play Store and Apple App Store review.</p>
+
+    <div class="links-grid">
+      <a href="privacy_policy.html" class="link-card">
+        <div>
+          <div class="link-title">Privacy Policy</div>
+          <div class="link-desc">Data collection, third-party sub-processors, and zero-training guarantee</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+      </a>
+
+      <a href="terms_and_conditions.html" class="link-card">
+        <div>
+          <div class="link-title">Terms and Conditions</div>
+          <div class="link-desc">Astrological disclaimer, ₹7 trial pass terms, and 30-minute voice cap</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+      </a>
+
+      <a href="deletion_policy.html" class="link-card">
+        <div>
+          <div class="link-title">Data & Account Deletion Policy</div>
+          <div class="link-desc">In-app deletion instructions and 15-step cryptographic purge sequence</div>
+        </div>
+        <div class="arrow">&rarr;</div>
+      </a>
+    </div>
+
+    <div class="footer">
+      &copy; 2026 AstroAI Quantum Systems. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>
