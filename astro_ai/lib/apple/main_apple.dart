@@ -6,7 +6,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'theme/apple_theme.dart';
-import 'screens/screen01_welcome_apple.dart';
+import 'package:astro_ai/shared/screens/splash/screen_animated_splash.dart';
 import 'package:astro_ai/shared/services/firebase_service.dart';
 
 void main() async {
@@ -44,7 +44,7 @@ class AstroAiAppleApp extends StatelessWidget {
       title: 'AstroAI - Vedic Astrolabe OS (Apple)',
       theme: AppleCosmicTheme.cupertinoTheme,
       debugShowCheckedModeBanner: false,
-      home: const Screen01WelcomeApple(),
+      home: const ScreenAnimatedSplash(isApple: true),
     );
   }
 }

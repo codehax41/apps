@@ -68,6 +68,8 @@ import 'package:astro_ai/apple/screens/screen26_privacy_preferences_apple.dart';
 
 // Shared Services
 import 'package:astro_ai/shared/services/firebase_service.dart';
+import 'package:astro_ai/shared/screens/splash/screen_animated_splash.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -136,7 +138,8 @@ class _AstroAIMasterAppState extends State<AstroAIMasterApp> {
 
   Map<String, WidgetBuilder> _androidRoutes() {
     return {
-      '/': (context) => const Screen01WelcomeAndroid(),
+      '/': (context) => const ScreenAnimatedSplash(isApple: false),
+      '/splash': (context) => const ScreenAnimatedSplash(isApple: false),
       '/screen01': (context) => const Screen01WelcomeAndroid(),
       '/screen02': (context) => const Screen02ChooseFocusAndroid(),
       '/screen03': (context) => const Screen03BirthDetailsAndroid(),
@@ -168,7 +171,8 @@ class _AstroAIMasterAppState extends State<AstroAIMasterApp> {
 
   Map<String, WidgetBuilder> _appleRoutes() {
     return {
-      '/': (context) => const Screen01WelcomeApple(),
+      '/': (context) => const ScreenAnimatedSplash(isApple: true),
+      '/splash': (context) => const ScreenAnimatedSplash(isApple: true),
       '/screen01': (context) => const Screen01WelcomeApple(),
       '/screen02': (context) => const Screen02ChooseFocusApple(),
       '/screen03': (context) => const Screen03BirthDetailsApple(),

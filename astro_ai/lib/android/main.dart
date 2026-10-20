@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'theme/android_theme.dart';
 import 'screens/screen01_welcome_android.dart';
+import 'package:astro_ai/shared/screens/splash/screen_animated_splash.dart';
 import 'screens/screen02_choose_focus_android.dart';
 import 'screens/screen03_birth_details_android.dart';
 import 'screens/screen04_birthplace_search_android.dart';
@@ -64,7 +65,8 @@ class AstroAIAndroidApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const Screen01WelcomeAndroid(),
+        '/': (context) => const ScreenAnimatedSplash(isApple: false),
+        '/splash': (context) => const ScreenAnimatedSplash(isApple: false),
         '/screen01': (context) => const Screen01WelcomeAndroid(),
         '/screen02': (context) => const Screen02ChooseFocusAndroid(),
         '/screen03': (context) => const Screen03BirthDetailsAndroid(),

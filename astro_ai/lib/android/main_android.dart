@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'theme/android_theme.dart';
-import 'screens/screen01_welcome_android.dart';
+import 'package:astro_ai/shared/screens/splash/screen_animated_splash.dart';
 import 'package:astro_ai/shared/services/firebase_service.dart';
 
 void main() async {
@@ -45,7 +45,7 @@ class AstroAiAndroidApp extends StatelessWidget {
       title: 'AstroAI - Vedic Astrolabe OS (Android)',
       theme: AndroidCosmicTheme.materialTheme,
       debugShowCheckedModeBanner: false,
-      home: const Screen01WelcomeAndroid(),
+      home: const ScreenAnimatedSplash(isApple: false),
     );
   }
 }
