@@ -1,0 +1,19 @@
+name = "daivant-storage-worker"
+main = "worker.js"
+compatibility_date = "2024-10-01"
+
+# Cloudflare R2 Bucket Binding
+[[r2_buckets]]
+binding = "ASTROAI_BUCKET"
+bucket_name = "daivant-vault"
+
+# Cloudflare D1 SQL Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "daivant-vault"
+database_id = "ba5c55a5-a5b8-42f2-837d-8fbde117a2b6"
+
+# Environment Variables
+[vars]
+WORKER_API_KEY = "cf_sec_daivant_astrology_41c57dfaf7c338deb5d557178ca75656"
+ACCOUNT_ID = "41c57dfaf7c338deb5d557178ca75656"

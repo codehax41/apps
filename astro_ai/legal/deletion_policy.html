@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Deletion Policy - Daivant AI Astrology</title>
+  <style>
+    :root {
+      --bg: #0B0E17;
+      --card-bg: #131A29;
+      --gold: #F3C969;
+      --text: #E2E8F0;
+      --text-muted: #94A3B8;
+      --border: #1E293B;
+      --danger: #EF4444;
+      --success: #10B981;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(180deg, #161F36 0%, var(--bg) 100%);
+      padding: 40px 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+    .header p {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .nav a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+    .nav a:hover, .nav a.active {
+      background: var(--gold);
+      color: #000;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    h2 {
+      color: var(--gold);
+      font-size: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+    }
+    th {
+      background: rgba(243, 201, 105, 0.1);
+      color: var(--gold);
+    }
+    td {
+      color: var(--text-muted);
+    }
+    .step-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .action-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .action-box h3 {
+      color: var(--danger);
+      margin-top: 0;
+    }
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Daivant AI Astrology</h1>
+    <p>User Account & Data Deletion Portal (Google Play & Apple Compliant)</p>
+    <div class="nav">
+      <a href="privacy_policy.html">Privacy Policy</a>
+      <a href="terms_and_conditions.html">Terms & Conditions</a>
+      <a href="deletion_policy.html" class="active">Data Deletion Policy</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>1. Self-Service Account & Data Deletion</h2>
+      <p>In accordance with Google Play Developer Policies and Apple App Store Review Guideline 5.1.1(v), users can permanently and irreversibly erase their account and all personal birth matrix information directly from the mobile app at any time.</p>
+      
+      <div class="action-box">
+        <h3>How to Delete Your Data Inside the App:</h3>
+        <ol style="margin-bottom: 0; padding-left: 20px;">
+          <li>Open the <strong>Daivant AI Astrology</strong> app on your device.</li>
+          <li>Navigate to <strong>Settings</strong> &gt; <strong>Data &amp; Privacy Management</strong>.</li>
+          <li>Scroll to the <strong>Danger Zone</strong> section.</li>
+          <li>Tap <strong>"Delete All Data &amp; Account"</strong> and confirm the prompt.</li>
+        </ol>
+      </div>
+
+      <h2>2. The 15-Step Cryptographic Purge Architecture</h2>
+      <p>When you trigger deletion, our automated purge engine executes 15 distinct operations across your client device and our cloud infrastructure:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Layer</th>
+            <th>Purge Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="step-badge">Step 01</span></td>
+            <td>Auth & Session</td>
+            <td>Invalidates active OAuth and JWT bearer tokens.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 02</span></td>
+            <td>Local Device</td>
+            <td>Truncates on-device encrypted SQLite databases.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 03</span></td>
+            <td>Local Device</td>
+            <td>Wipes local Hive storage containers.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 04</span></td>
+            <td>Biometrics</td>
+            <td>Revokes hardware Keystore / Keychain secure enclave keys.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 05</span></td>
+            <td>Cache</td>
+            <td>Evicts temporary planetary ephemeris transit caches.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 06</span></td>
+            <td>Cloud Firestore</td>
+            <td>Permanently deletes root user document <code>/users/{uid}</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 07</span></td>
+            <td>Cloud Firestore</td>
+            <td>Deletes all subcollections under <code>/users/{uid}/natal_matrix</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 08</span></td>
+            <td>Cloud Firestore</td>
+            <td>Deletes all consultation history under <code>/users/{uid}/saved_readings</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 09</span></td>
+            <td>Cloudflare D1</td>
+            <td>Purges query history and audit logs in Cloudflare D1 SQL Vault.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 10</span></td>
+            <td>Cloudflare R2</td>
+            <td>Deletes encrypted birth chart blobs from R2 bucket <code>daivant-vault</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 11</span></td>
+            <td>AI Engine</td>
+            <td>Evicts ephemeral context memory from AI inference runners.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 12</span></td>
+            <td>Push Notifications</td>
+            <td>Deregisters Firebase Cloud Messaging (FCM) device push tokens.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 13</span></td>
+            <td>Diagnostics</td>
+            <td>Unlinks pseudonymous Firebase Crashlytics installation identifiers.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 14</span></td>
+            <td>Firebase Auth</td>
+            <td>Permanently purges the user record from Firebase Authentication.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 15</span></td>
+            <td>Client Reset</td>
+            <td>Clears all SharedPreferences / UserDefaults and resets app to initial state.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Manual Web Deletion Request</h2>
+      <p>If you no longer have access to the mobile app, you can submit a manual deletion request by contacting our team:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:ramsundar.1238@gmail.com" style="color: var(--gold);">ramsundar.1238@gmail.com</a></li>
+        <li><strong>Subject Line:</strong> <code>ACCOUNT DELETION REQUEST: com.astroai.quantum</code></li>
+        <li><strong>Processing Time:</strong> All manual deletion requests are verified and completed within <strong>48 hours</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Daivant AI Astrology (com.astroai.quantum). All rights reserved.
+  </div>
+
+</body>
+</html>

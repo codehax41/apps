@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Daivant AI Astrology</title>
+  <style>
+    :root {
+      --bg: #0B0E17;
+      --card-bg: #131A29;
+      --gold: #F3C969;
+      --text: #E2E8F0;
+      --text-muted: #94A3B8;
+      --border: #1E293B;
+      --accent: #7C3AED;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(180deg, #161F36 0%, var(--bg) 100%);
+      padding: 40px 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+    .header p {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .nav a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+    .nav a:hover, .nav a.active {
+      background: var(--gold);
+      color: #000;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 820px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    h2 {
+      color: var(--gold);
+      font-size: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    h3 {
+      color: #CBD5E1;
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+    ul, ol {
+      padding-left: 24px;
+      color: var(--text-muted);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    p {
+      color: var(--text-muted);
+    }
+    strong {
+      color: var(--text);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(243, 201, 105, 0.15);
+      color: var(--gold);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Daivant AI Astrology</h1>
+    <p>Package: com.astroai.quantum | Official Privacy Policy</p>
+    <div class="nav">
+      <a href="privacy_policy.html" class="active">Privacy Policy</a>
+      <a href="terms_and_conditions.html">Terms & Conditions</a>
+      <a href="deletion_policy.html">Data Deletion Policy</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <span class="badge">Google Play & Apple App Store Compliant</span>
+      <p><strong>Effective Date:</strong> October 21, 2026 | <strong>Last Updated:</strong> October 21, 2026</p>
+      
+      <h2>1. Introduction & Zero-PII Guarantee</h2>
+      <p>Welcome to <strong>Daivant AI Astrology</strong> ("Daivant", "we", "us", or "our"). We take your privacy and spiritual data sovereignty with utmost seriousness. Our core philosophy is built upon a <strong>Zero-PII Exploitation Policy</strong>: we do not sell, rent, monetize, or broker your personal information, birth parameters, or astrological readings to third-party data aggregators or advertisers.</p>
+
+      <h2>2. Information We Process</h2>
+      <h3>A. Astrological Birth Matrix Data</h3>
+      <p>In order to compute classical Vedic horoscopes, Navamsha (D9) and Shodashvarga (D1-D60) charts, Vimshottari Dashas, and planetary transits, you provide:</p>
+      <ul>
+        <li><strong>Name or Alias</strong> (used strictly for report labeling)</li>
+        <li><strong>Date and Exact Time of Birth</strong> (required for Ascendant / Lagna and planetary degree computation)</li>
+        <li><strong>Birth Location Coordinates</strong> (Latitude, Longitude, and Timezone for geocentric ephemeris calculations)</li>
+        <li><strong>Gender</strong> (optional; used only where classical rules dictate specific planetary matrices)</li>
+      </ul>
+
+      <h3>B. AI Astrological Consultation Transcripts</h3>
+      <p>When you consult the Daivant AI Astrologer, your queries and astrological matrices are passed securely via HTTPS encrypted channels to generate contextual Vedic interpretations. We do not use your private consultation logs to train public AI models.</p>
+
+      <h3>C. Technical Diagnostics</h3>
+      <p>Anonymous diagnostic telemetry (device model, OS version, and crash stacks) is collected via Firebase Crashlytics solely to resolve unexpected software crashes.</p>
+
+      <h2>3. Storage Architecture & Cloud Security</h2>
+      <ul>
+        <li><strong>Local-First Computing:</strong> Planetary positions and divisional chart matrices are computed client-side using mathematical ephemeris algorithms.</li>
+        <li><strong>Cloudflare Zero-Knowledge Vault:</strong> Cloud backups and artifacts are stored securely in Cloudflare D1 and Cloudflare R2 object storage with AES-256 encryption.</li>
+        <li><strong>Google Firebase Cloud (Mumbai asia-south1):</strong> User authentication tokens and cloud synchronization are isolated under strict Firestore Security Rules, preventing any user from accessing another's data.</li>
+      </ul>
+
+      <h2>4. User Rights & The 15-Step Cryptographic Purge</h2>
+      <p>You have the absolute right to access, export, or permanently delete your data at any time. We feature an instant, self-service <strong>15-Step Cryptographic Purge</strong> in the app settings, which irrevocably scrubs your records across local devices, Firebase Authentication, Cloud Firestore, and Cloudflare R2/D1 vaults.</p>
+      <p>Learn more about our deletion protocol at our <a href="deletion_policy.html" style="color: var(--gold);">Data Deletion Policy</a>.</p>
+
+      <h2>5. In-App Payments</h2>
+      <p>All in-app purchases and subscriptions are handled directly by Google Play Billing (v7) and Apple App Store StoreKit. Daivant never sees, stores, or processes your credit card numbers or banking credentials.</p>
+
+      <h2>6. Developer Contact</h2>
+      <p>If you have any questions or concerns regarding this policy, please reach out to our team at:<br>
+      <strong>Email:</strong> <a href="mailto:ramsundar.1238@gmail.com" style="color: var(--gold);">ramsundar.1238@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Daivant AI Astrology (com.astroai.quantum). All rights reserved.
+  </div>
+
+</body>
+</html>

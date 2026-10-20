@@ -3,188 +3,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astro AI — User Data & Account Deletion Policy</title>
+  <title>Data Deletion Policy - Daivant AI Astrology</title>
   <style>
     :root {
-      --bg: #070712;
-      --card-bg: rgba(255, 255, 255, 0.035);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --accent: #F5D485;
-      --rose: #F43F5E;
-      --text: #F1F5F9;
+      --bg: #0B0E17;
+      --card-bg: #131A29;
+      --gold: #F3C969;
+      --text: #E2E8F0;
       --text-muted: #94A3B8;
+      --border: #1E293B;
+      --danger: #EF4444;
+      --success: #10B981;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at 50% 0%, #1A0D1E 0%, var(--bg) 65%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       line-height: 1.7;
-      padding: 40px 20px;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(180deg, #161F36 0%, var(--bg) 100%);
+      padding: 40px 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+    .header p {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .nav a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+    .nav a:hover, .nav a.active {
+      background: var(--gold);
+      color: #000;
+      font-weight: 600;
     }
     .container {
       max-width: 860px;
-      margin: 0 auto;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+    }
+    .card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 48px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
-    }
-    .badge {
-      display: inline-block;
-      font-family: monospace;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      color: var(--rose);
-      background: rgba(244, 63, 94, 0.12);
-      border: 1px solid rgba(244, 63, 94, 0.35);
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-    }
-    h1 {
-      font-size: 34px;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin-bottom: 8px;
-    }
-    .effective-date {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 32px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
     h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-top: 36px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--gold);
+      font-size: 1.4rem;
+      border-bottom: 1px solid var(--border);
       padding-bottom: 8px;
+      margin-top: 0;
     }
-    p, li {
-      font-size: 15px;
-      color: #CBD5E1;
-      margin-bottom: 14px;
-    }
-    ol, ul {
-      padding-left: 24px;
-      margin-bottom: 18px;
-    }
-    li { margin-bottom: 10px; }
-    strong { color: #FFFFFF; }
-    .step-box {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
-      padding: 24px;
-      border-radius: 16px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
       margin: 20px 0;
+      font-size: 0.95rem;
     }
-    .warning-box {
-      background: rgba(244, 63, 94, 0.12);
-      border-left: 3px solid var(--rose);
-      padding: 18px 20px;
-      border-radius: 0 12px 12px 0;
-      margin: 24px 0;
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
     }
-    .step-badge {
-      background: var(--accent);
-      color: #070712;
-      font-weight: bold;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-right: 8px;
+    th {
+      background: rgba(243, 201, 105, 0.1);
+      color: var(--gold);
     }
-    .footer {
-      margin-top: 48px;
-      padding-top: 24px;
-      border-top: 1px solid var(--card-border);
-      text-align: center;
-      font-size: 13px;
+    td {
       color: var(--text-muted);
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .step-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .action-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .action-box h3 {
+      color: var(--danger);
+      margin-top: 0;
+    }
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="badge">Google Play & Apple App Store Compliance</div>
-    <h1>Data & Account Deletion Policy</h1>
-    <div class="effective-date">Effective Date: October 20, 2026 • Last Updated: October 2026</div>
 
-    <p>In accordance with <strong>Google Play Data Safety policies</strong>, <strong>Apple App Store Review Guideline 5.1.1(v)</strong>, and global privacy standards (GDPR, CCPA, DPDPA), this page provides clear instructions on how Astro AI users can permanently delete their account and associated personal data.</p>
-
-    <div class="warning-box">
-      <strong>PERMANENT & IRREVERSIBLE ACTION:</strong><br>
-      Account deletion permanently destroys your calculated birth charts (D1, D9, D10), natal ephemeris coordinates, voice interaction recordings, and AI oracle dialogue histories. This action cannot be undone.
-    </div>
-
-    <h2>Method 1: In-App Immediate Deletion (Recommended)</h2>
-    <p>You can execute complete account deletion immediately directly within the mobile application:</p>
-    <div class="step-box">
-      <ol>
-        <li>Open the <strong>Astro AI</strong> app on your Android or iOS device.</li>
-        <li>Navigate to the <strong>Personal Profile</strong> screen (Screen 25) by tapping your avatar or profile icon in the navigation bar.</li>
-        <li>Scroll down to the <strong>Privacy & Security</strong> section.</li>
-        <li>Tap <strong>Delete Entire Profile</strong>.</li>
-        <li>Review the permanent deletion disclosure modal.</li>
-        <li>Type the confirmation word <code>DELETE</code> into the security verification prompt.</li>
-        <li>Tap <strong>Confirm Permanent Deletion</strong>. Your account will be immediately wiped, all session tokens revoked, and you will be returned to the Welcome screen.</li>
-      </ol>
-    </div>
-
-    <h2>Method 2: Web-Based Deletion Request (Without Reinstalling the App)</h2>
-    <p>If you have uninstalled the application or cannot access your mobile device, you can submit a manual deletion request without needing to reinstall the app:</p>
-    <div class="step-box">
-      <p>Send an email from the address associated with your Astro AI account to:</p>
-      <p style="font-size: 18px; color: var(--accent); font-weight: bold; margin: 12px 0;">
-        <a href="mailto:privacy@astroai.quantum?subject=Account%20Deletion%20Request">privacy@astroai.quantum</a>
-      </p>
-      <p>Please include the following details in your message:</p>
-      <ul>
-        <li><strong>Subject Line:</strong> Account Deletion Request</li>
-        <li><strong>Registered Email:</strong> The exact email used to sign in (or your federated Apple/Google/Facebook email).</li>
-        <li><strong>Statement:</strong> "I hereby request the permanent deletion of my Astro AI account and all associated personal and astrological data."</li>
-      </ul>
-      <p>Our Data Protection Officer will verify the request and complete the deletion within <strong>48 hours</strong>, followed by a written confirmation email.</p>
-    </div>
-
-    <h2>The 15-Step Cryptographic Purge Process</h2>
-    <p>When an account deletion is initiated, our backend executes an automated 15-step permanent wipe routine across all data stores:</p>
-    <ol>
-      <li><span class="step-badge">STEP 1</span> Disable account authentication and invalidate active session tokens.</li>
-      <li><span class="step-badge">STEP 2</span> Delete user profile record, display name, and avatar references.</li>
-      <li><span class="step-badge">STEP 3</span> Purge exact date of birth, time of birth, and geographic coordinates.</li>
-      <li><span class="step-badge">STEP 4</span> Erase computed Vedic divisional charts (Kundali D1, Navamsa D9, Dasamsa D10).</li>
-      <li><span class="step-badge">STEP 5</span> Delete all saved astrological readings and planetary transit caches.</li>
-      <li><span class="step-badge">STEP 6</span> Clear all AI conversation dialogues, user queries, and prompt histories.</li>
-      <li><span class="step-badge">STEP 7</span> Delete voice session recordings, audio buffers, and speech telemetry.</li>
-      <li><span class="step-badge">STEP 8</span> Purge uploaded audio attachments and voice cache chunks.</li>
-      <li><span class="step-badge">STEP 9</span> Delete custom preferences, notification schedules, and language choices.</li>
-      <li><span class="step-badge">STEP 10</span> Detach payment gateway customer identities.</li>
-      <li><span class="step-badge">STEP 11</span> Revoke active JWTs and OAuth refresh tokens across all devices.</li>
-      <li><span class="step-badge">STEP 12</span> Sever federated identity links (Google, Apple, Facebook).</li>
-      <li><span class="step-badge">STEP 13</span> Remove user-owned cloud object storage containers.</li>
-      <li><span class="step-badge">STEP 14</span> Hard delete primary user record from database clusters.</li>
-      <li><span class="step-badge">STEP 15</span> Emit an anonymous audit event (<code>ACCOUNT_DELETION_SUCCESS</code>) without retaining personally identifiable information (PII).</li>
-    </ol>
-
-    <h2>Data Retention Exceptions</h2>
-    <p>In accordance with statutory legal requirements, financial transaction records (such as GST invoices and payment reference numbers for the ₹7 Trial Pass) are retained for 7 years solely to satisfy statutory accounting and taxation audits. These records contain no astrological ephemeris, voice, or conversation data.</p>
-
-    <h2>Questions or Assistance</h2>
-    <p>If you encounter any issues deleting your account, contact our Data Protection Officer directly:</p>
-    <p><strong>Email:</strong> <a href="mailto:privacy@astroai.quantum">privacy@astroai.quantum</a><br>
-    <strong>Organization:</strong> AstroAI Quantum Systems</p>
-
-    <div class="footer">
-      &copy; 2026 AstroAI Quantum Systems. All rights reserved. • <a href="privacy_policy.html">Privacy Policy</a> • <a href="terms_and_conditions.html">Terms & Conditions</a>
+  <div class="header">
+    <h1>Daivant AI Astrology</h1>
+    <p>User Account & Data Deletion Portal (Google Play & Apple Compliant)</p>
+    <div class="nav">
+      <a href="privacy_policy.html">Privacy Policy</a>
+      <a href="terms_and_conditions.html">Terms & Conditions</a>
+      <a href="deletion_policy.html" class="active">Data Deletion Policy</a>
     </div>
   </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>1. Self-Service Account & Data Deletion</h2>
+      <p>In accordance with Google Play Developer Policies and Apple App Store Review Guideline 5.1.1(v), users can permanently and irreversibly erase their account and all personal birth matrix information directly from the mobile app at any time.</p>
+      
+      <div class="action-box">
+        <h3>How to Delete Your Data Inside the App:</h3>
+        <ol style="margin-bottom: 0; padding-left: 20px;">
+          <li>Open the <strong>Daivant AI Astrology</strong> app on your device.</li>
+          <li>Navigate to <strong>Settings</strong> &gt; <strong>Data &amp; Privacy Management</strong>.</li>
+          <li>Scroll to the <strong>Danger Zone</strong> section.</li>
+          <li>Tap <strong>"Delete All Data &amp; Account"</strong> and confirm the prompt.</li>
+        </ol>
+      </div>
+
+      <h2>2. The 15-Step Cryptographic Purge Architecture</h2>
+      <p>When you trigger deletion, our automated purge engine executes 15 distinct operations across your client device and our cloud infrastructure:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Layer</th>
+            <th>Purge Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="step-badge">Step 01</span></td>
+            <td>Auth & Session</td>
+            <td>Invalidates active OAuth and JWT bearer tokens.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 02</span></td>
+            <td>Local Device</td>
+            <td>Truncates on-device encrypted SQLite databases.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 03</span></td>
+            <td>Local Device</td>
+            <td>Wipes local Hive storage containers.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 04</span></td>
+            <td>Biometrics</td>
+            <td>Revokes hardware Keystore / Keychain secure enclave keys.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 05</span></td>
+            <td>Cache</td>
+            <td>Evicts temporary planetary ephemeris transit caches.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 06</span></td>
+            <td>Cloud Firestore</td>
+            <td>Permanently deletes root user document <code>/users/{uid}</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 07</span></td>
+            <td>Cloud Firestore</td>
+            <td>Deletes all subcollections under <code>/users/{uid}/natal_matrix</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 08</span></td>
+            <td>Cloud Firestore</td>
+            <td>Deletes all consultation history under <code>/users/{uid}/saved_readings</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 09</span></td>
+            <td>Cloudflare D1</td>
+            <td>Purges query history and audit logs in Cloudflare D1 SQL Vault.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 10</span></td>
+            <td>Cloudflare R2</td>
+            <td>Deletes encrypted birth chart blobs from R2 bucket <code>daivant-vault</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 11</span></td>
+            <td>AI Engine</td>
+            <td>Evicts ephemeral context memory from AI inference runners.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 12</span></td>
+            <td>Push Notifications</td>
+            <td>Deregisters Firebase Cloud Messaging (FCM) device push tokens.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 13</span></td>
+            <td>Diagnostics</td>
+            <td>Unlinks pseudonymous Firebase Crashlytics installation identifiers.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 14</span></td>
+            <td>Firebase Auth</td>
+            <td>Permanently purges the user record from Firebase Authentication.</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 15</span></td>
+            <td>Client Reset</td>
+            <td>Clears all SharedPreferences / UserDefaults and resets app to initial state.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Manual Web Deletion Request</h2>
+      <p>If you no longer have access to the mobile app, you can submit a manual deletion request by contacting our team:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:ramsundar.1238@gmail.com" style="color: var(--gold);">ramsundar.1238@gmail.com</a></li>
+        <li><strong>Subject Line:</strong> <code>ACCOUNT DELETION REQUEST: com.astroai.quantum</code></li>
+        <li><strong>Processing Time:</strong> All manual deletion requests are verified and completed within <strong>48 hours</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2026 Daivant AI Astrology (com.astroai.quantum). All rights reserved.
+  </div>
+
 </body>
 </html>

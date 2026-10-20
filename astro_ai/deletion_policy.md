@@ -1,49 +1,59 @@
-# Astro AI — User Data & Account Deletion Policy
-**Effective Date:** October 20, 2026 • **Application:** AstroAI OS v5.0 (Android & iOS)
-
-In compliance with **Google Play Store Data Safety policies** and **Apple App Store Review Guideline 5.1.1(v)**, this document specifies how users can permanently delete their Astro AI account and all associated personal and astrological data.
-
----
-
-## Method 1: In-App Immediate Deletion
-1. Open **Astro AI** on your device.
-2. Go to **Personal Profile** (Screen 25).
-3. Scroll down to the **Privacy & Security** section.
-4. Tap **Delete Entire Profile**.
-5. Type the confirmation word `DELETE`.
-6. Tap **Confirm Permanent Deletion**. All data is wiped immediately and session tokens are invalidated.
+# Daivant AI Astrology - User Data & Account Deletion Policy
+**Last Updated:** October 21, 2026  
+**Application:** Daivant AI Astrology (`com.astroai.quantum`)  
+**Developer Contact:** ramsundar.1238@gmail.com  
 
 ---
 
-## Method 2: Web-Based Request (Without App Reinstallation)
-If you uninstalled the app or lost device access, email:
-- **To:** `privacy@astroai.quantum`
-- **Subject:** `Account Deletion Request`
-- **Body:** Include your registered email address and a statement requesting permanent account and data deletion.
-- **SLA:** Verified and completed within **48 hours**.
+## 1. User Sovereignty & Right to Erasure
+In compliance with Google Play Developer Policies, Apple App Store Review Guidelines (Guideline 5.1.1(v)), the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and the Digital Personal Data Protection Act (DPDP), **Daivant AI Astrology** provides all users with an immediate, irrevocable, and self-service mechanism to delete their accounts and all associated data.
 
 ---
 
-## The 15-Step Cryptographic Purge Process
-When an account deletion is initiated, our backend executes an automated 15-step permanent wipe:
-1. Revoke active session tokens and disable authentication.
-2. Delete user profile record, display name, and avatar references.
-3. Purge exact birth date, time, and coordinates.
-4. Erase computed Vedic divisional charts (Kundali D1, Navamsa D9, Dasamsa D10).
-5. Delete saved astrological readings and transit caches.
-6. Delete all AI conversation dialogues and prompt histories.
-7. Purge voice session recordings and telemetry.
-8. Purge cloud storage audio chunks.
-9. Delete notification schedules and preferences.
-10. Detach payment provider customer identities.
-11. Revoke active JWTs and OAuth refresh tokens.
-12. Sever federated identity links (Google, Apple, Facebook).
-13. Remove user-owned cloud object storage containers.
-14. Hard delete primary user record from database clusters.
-15. Emit an anonymous audit log event (`ACCOUNT_DELETION_SUCCESS`) with zero PII retained.
+## 2. In-App Deletion (Immediate Self-Service)
+You can permanently delete your account and all stored astrological matrices directly inside the application:
+1. Open **Daivant AI Astrology**.
+2. Navigate to **Settings** (or tap the Profile icon).
+3. Select **Data & Privacy Management**.
+4. Scroll to **Danger Zone** and tap **"Delete All Data & Account"**.
+5. Confirm the cryptographic purge prompt.
+
+Upon confirmation, our automated **15-Step Cryptographic Purge Protocol** executes across your local device and cloud infrastructure in real-time.
 
 ---
 
-## Contact
-- **Email:** `privacy@astroai.quantum`
-- **Entity:** AstroAI Quantum Systems
+## 3. The 15-Step Cryptographic Purge Architecture
+When initiated, the following sequence is executed:
+
+| Step | Scope | Operation Executed |
+|---|---|---|
+| **01** | Device / Security | Invalidate active JWT authorization sessions and OAuth tokens. |
+| **02** | Local Storage | Truncate local SQLite encrypted database records. |
+| **03** | Local Storage | Clear Hive box containers holding astrological cache. |
+| **04** | Biometrics | Invalidate Android Keystore / iOS Keychain hardware encryption keys. |
+| **05** | Cache | Evict temporary transit overlays and planetary ephemeris caches. |
+| **06** | Cloud Firestore | Permanently delete `/users/{userId}` user document. |
+| **07** | Cloud Firestore | Recursively delete `/users/{userId}/natal_matrix/*` subcollection. |
+| **08** | Cloud Firestore | Recursively delete `/users/{userId}/saved_readings/*` subcollection. |
+| **09** | Cloudflare D1 | Purge query execution records matching hashed UID in D1 SQL Vault. |
+| **10** | Cloudflare R2 | Delete encrypted birth chart binary blobs stored in `daivant-vault` bucket. |
+| **11** | AI Consultation | Evict active ephemeral memory contexts in AI model inference engines. |
+| **12** | Notifications | Deregister Firebase Cloud Messaging (FCM) device push tokens. |
+| **13** | Analytics | Disassociate Firebase Crashlytics pseudonymous device installation identifiers. |
+| **14** | Firebase Auth | Permanently delete the user account in Firebase Authentication. |
+| **15** | App State | Clear all SharedPreferences / UserDefaults and reset client to factory zero. |
+
+---
+
+## 4. Manual Web-Based Deletion Request
+If you have uninstalled the application or cannot access your mobile device, you can request manual deletion:
+
+1. **Email:** Send an email to `ramsundar.1238@gmail.com` with the subject line:  
+   `DATA DELETION REQUEST - Daivant AI Astrology`
+2. **Identification Details:** Provide your registered email address or the approximate date/time of your birth profile.
+3. **Turnaround Time:** Requests are processed and confirmed within **48 hours**. Once purged, you will receive a cryptographic confirmation receipt.
+
+---
+
+## 5. Retention Exceptions
+We do **not** retain any personal or astrological data following account deletion. Transaction logs related to past billing receipts are maintained solely within Apple App Store and Google Play Console according to statutory financial reporting regulations.
